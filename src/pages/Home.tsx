@@ -16,11 +16,16 @@ import {
   ChevronDown,
   ChevronUp,
   FileText,
-  Sparkles
+  Sparkles,
+  Upload,
+  X,
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react'
 
-// Agent ID for Knowledge Search
+// Agent ID and RAG ID
 const AGENT_ID = "69618f6cc57d451439d4d682"
+const RAG_ID = "69618f5aee18986913060e4b"
 
 // TypeScript interfaces based on REAL response schema
 interface Source {
@@ -46,6 +51,13 @@ interface ConversationMessage {
   response?: KnowledgeSearchResult
 }
 
+interface UploadedFile {
+  name: string
+  size: number
+  status: 'uploading' | 'completed' | 'error'
+  error?: string
+}
+
 // Starter questions
 const STARTER_QUESTIONS = [
   "What are the key findings?",
@@ -59,8 +71,11 @@ export default function Home() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [sessionId, setSessionId] = useState(`session-${Date.now()}`)
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
+  const [showUploadModal, setShowUploadModal] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -137,6 +152,56 @@ export default function Home() {
     navigator.clipboard.writeText(text)
   }
 
+  // Handle file upload
+  const handleFileUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return
+
+    const newFiles: UploadedFile[] = Array.from(files).map(file => ({
+      name: file.name,
+      size: file.size,
+      status: 'uploading' as const
+    }))
+
+    setUploadedFiles(prev => [...prev, ...newFiles])
+
+    // Upload files to RAG
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+      const fileIndex = uploadedFiles.length + i
+
+      try {
+        const formData = new FormData()
+        formData.append('file', file)
+
+        const response = await fetch(`https://rag-prod.studio.lyzr.ai/v2/rag/${RAG_ID}/ingest`, {
+          method: 'POST',
+          body: formData
+        })
+
+        if (!response.ok) {
+          throw new Error(`Upload failed: ${response.statusText}`)
+        }
+
+        setUploadedFiles(prev => prev.map((f, idx) =>
+          idx === fileIndex ? { ...f, status: 'completed' as const } : f
+        ))
+      } catch (error) {
+        setUploadedFiles(prev => prev.map((f, idx) =>
+          idx === fileIndex ? {
+            ...f,
+            status: 'error' as const,
+            error: error instanceof Error ? error.message : 'Upload failed'
+          } : f
+        ))
+      }
+    }
+  }
+
+  // Remove uploaded file from list
+  const handleRemoveFile = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, idx) => idx !== index))
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col">
       {/* Header */}
@@ -148,17 +213,28 @@ export default function Home() {
             </div>
             <h1 className="text-xl font-bold text-white">Knowledge Search</h1>
           </div>
-          {messages.length > 0 && (
+          <div className="flex items-center gap-2">
             <Button
-              onClick={handleNewConversation}
-              variant="ghost"
+              onClick={() => setShowUploadModal(true)}
+              variant="outline"
               size="sm"
-              className="text-slate-400 hover:text-white hover:bg-slate-800"
+              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-600"
             >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              New Conversation
+              <Upload className="w-4 h-4 mr-2" />
+              Upload PDFs
             </Button>
-          )}
+            {messages.length > 0 && (
+              <Button
+                onClick={handleNewConversation}
+                variant="ghost"
+                size="sm"
+                className="text-slate-400 hover:text-white hover:bg-slate-800"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                New Conversation
+              </Button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -216,6 +292,17 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Upload Modal */}
+      {showUploadModal && (
+        <UploadModal
+          uploadedFiles={uploadedFiles}
+          onClose={() => setShowUploadModal(false)}
+          onFileUpload={handleFileUpload}
+          onRemoveFile={handleRemoveFile}
+          fileInputRef={fileInputRef}
+        />
+      )}
     </div>
   )
 }
@@ -458,6 +545,120 @@ function FollowUpSuggestions({ suggestions }: { suggestions: string[] }) {
           </Badge>
         ))}
       </div>
+    </div>
+  )
+}
+
+// Upload Modal component
+function UploadModal({
+  uploadedFiles,
+  onClose,
+  onFileUpload,
+  onRemoveFile,
+  fileInputRef
+}: {
+  uploadedFiles: UploadedFile[]
+  onClose: () => void
+  onFileUpload: (files: FileList | null) => void
+  onRemoveFile: (index: number) => void
+  fileInputRef: React.RefObject<HTMLInputElement>
+}) {
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + ' B'
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <Card className="w-full max-w-2xl bg-slate-900 border-slate-700">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white">Upload PDF Documents</h2>
+            <Button
+              onClick={onClose}
+              variant="ghost"
+              size="sm"
+              className="text-slate-400 hover:text-white hover:bg-slate-800"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
+
+          <p className="text-slate-400 mb-6">
+            Upload PDF documents to build your knowledge base. The agent will search through these documents to answer your questions.
+          </p>
+
+          {/* Upload Area */}
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="border-2 border-dashed border-slate-700 rounded-lg p-8 text-center hover:border-teal-500 hover:bg-slate-800/30 transition-all cursor-pointer mb-6"
+          >
+            <Upload className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+            <p className="text-slate-300 font-medium mb-1">Click to upload PDF files</p>
+            <p className="text-sm text-slate-500">or drag and drop</p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf"
+              multiple
+              onChange={(e) => onFileUpload(e.target.files)}
+              className="hidden"
+            />
+          </div>
+
+          {/* Uploaded Files List */}
+          {uploadedFiles.length > 0 && (
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium text-slate-400 mb-3">Uploaded Files</h3>
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {uploadedFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg"
+                  >
+                    <FileText className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-200 truncate">{file.name}</p>
+                      <p className="text-xs text-slate-500">{formatFileSize(file.size)}</p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {file.status === 'uploading' && (
+                        <Loader2 className="w-4 h-4 text-teal-400 animate-spin" />
+                      )}
+                      {file.status === 'completed' && (
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                      )}
+                      {file.status === 'error' && (
+                        <AlertCircle className="w-4 h-4 text-red-500" />
+                      )}
+                      <Button
+                        onClick={() => onRemoveFile(index)}
+                        variant="ghost"
+                        size="sm"
+                        className="text-slate-500 hover:text-red-400 hover:bg-slate-800 h-8 w-8 p-0"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Footer */}
+          <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-slate-700">
+            <Button
+              onClick={onClose}
+              variant="outline"
+              className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+            >
+              Done
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,0 +1,37 @@
+{
+  "workflow_id": "knowledge_search_app",
+  "workflow_name": "Knowledge Search Application",
+  "workflow_type": "single_agent",
+  "status": "complete",
+  "created_at": "2026-01-09T00:00:00Z",
+  "updated_at": "2026-01-09T00:00:00Z",
+  "agents": {
+    "Knowledge Search Agent": {
+      "agent_id": "69618f6cc57d451439d4d682",
+      "status": "created",
+      "type": "single",
+      "has_knowledge_base": true,
+      "rag_id": "69618f5aee18986913060e4b",
+      "rag_name": "pdfknowledgebasep028",
+      "response_schema_saved": true,
+      "schema_file": "response_schemas/knowledge_search_agent_response.json"
+    }
+  },
+  "knowledge_bases": {
+    "PDF Knowledge Base": {
+      "rag_id": "69618f5aee18986913060e4b",
+      "rag_name": "pdfknowledgebasep028",
+      "status": "created",
+      "linked_agents": ["69618f6cc57d451439d4d682"]
+    }
+  },
+  "total_agents": 1,
+  "total_knowledge_bases": 1,
+  "completion_checklist": {
+    "workflow_created": true,
+    "all_agents_created": true,
+    "all_schemas_saved": true,
+    "workflow_json_updated": true,
+    "workflow_state_updated": true
+  }
+}

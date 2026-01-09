@@ -1,0 +1,75 @@
+{
+  "workflow_id": "knowledge_search_app",
+  "workflow_name": "Knowledge Search Application",
+  "workflow_type": "single_agent",
+  "created_at": "2026-01-09T00:00:00Z",
+  "nodes": [
+    {
+      "id": "user_input",
+      "type": "Input",
+      "label": "User Query",
+      "nodeCategory": "input",
+      "position": {
+        "x": 100,
+        "y": 200
+      }
+    },
+    {
+      "id": "knowledge_search_agent",
+      "type": "Agent",
+      "label": "Knowledge Search Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69618f6cc57d451439d4d682",
+      "agent_name": "Knowledge Search Agent",
+      "position": {
+        "x": 400,
+        "y": 200
+      }
+    },
+    {
+      "id": "response_output",
+      "type": "Output",
+      "label": "Search Results",
+      "nodeCategory": "end",
+      "position": {
+        "x": 700,
+        "y": 200
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "user_input",
+      "target": "knowledge_search_agent"
+    },
+    {
+      "source": "knowledge_search_agent",
+      "target": "response_output"
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "69618f6cc57d451439d4d682",
+      "name": "Knowledge Search Agent",
+      "type": "single",
+      "description": "Searches user's PDF knowledge base to answer queries accurately with source citations, maintains conversation context for follow-up questions, and provides Perplexity-style responses with referenced sources",
+      "provider": "OpenAI",
+      "model": "gpt-4.1",
+      "temperature": 0.3,
+      "top_p": 1,
+      "has_knowledge_base": true,
+      "rag_id": "69618f5aee18986913060e4b",
+      "rag_name": "pdfknowledgebasep028",
+      "trigger": "Search button or Enter key on Chat Interface"
+    }
+  ],
+  "knowledge_bases": [
+    {
+      "rag_id": "69618f5aee18986913060e4b",
+      "rag_name": "pdfknowledgebasep028",
+      "name": "PDF Knowledge Base",
+      "description": "Knowledge base for searching and retrieving information from PDF documents with source citations",
+      "linked_agents": ["69618f6cc57d451439d4d682"]
+    }
+  ]
+}

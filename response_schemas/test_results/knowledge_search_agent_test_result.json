@@ -1,0 +1,27 @@
+{
+  "agent_name": "Knowledge Search Agent",
+  "agent_id": "69618f6cc57d451439d4d682",
+  "test_message": "What are the main conclusions in the document?",
+  "expected_purpose": "research",
+  "timestamp": "2026-01-09T23:31:00.730859",
+  "is_valid_json": true,
+  "validation_errors": [],
+  "actual_response": {
+    "status": "success",
+    "result": {
+      "answer": "The main conclusions of the document could not be determined, as no specific source information or excerpts pertaining to the document's conclusions were found in the knowledge base. If you can provide more details or specify a section, I can attempt to retrieve more targeted information.",
+      "sources": [],
+      "context_maintained": true,
+      "follow_up_suggestions": [
+        "What are the main recommendations in the document?",
+        "Can you provide a summary of the key findings?"
+      ],
+      "confidence": 0.1
+    },
+    "metadata": {
+      "agent_name": "Knowledge Search Agent",
+      "timestamp": "2024-06-08T18:39:36Z"
+    }
+  },
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"answer\": \"The main conclusions of the document could not be determined, as no specific source information or excerpts pertaining to the document's conclusions were found in the knowledge base. If you can provide more details or specify a section, I can attempt to retrieve more targeted information.\",\n    \"sources\": [],\n    \"context_maintained\": true,\n    \"follow_up_suggestions\": [\n      \"What are the main recommendations in the document?\",\n      \"Can you provide a summary of the key findings?\"\n    ],\n    \"confidence\": 0.1\n  },\n  \"metadata\": {\n    \"agent_name\": \"Knowledge Search Agent\",\n    \"timestamp\": \"2024-06-08T18:39:36Z\"\n  }\n}"
+}

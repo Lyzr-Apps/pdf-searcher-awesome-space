@@ -1,0 +1,61 @@
+{
+  "agent_name": "Knowledge Search Agent",
+  "agent_id": "69618f6cc57d451439d4d682",
+  "agent_purpose": "research",
+  "description": "Searches PDF knowledge base and provides citation-backed answers with source references",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "answer": "string",
+      "sources": [
+        "any"
+      ],
+      "context_maintained": "boolean",
+      "follow_up_suggestions": [
+        "string"
+      ],
+      "confidence": "number"
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "answer": "There is no relevant information available in the PDF knowledge base related to the sample research topic requested. Please provide a more specific topic or clarify your query for further assistance.",
+      "sources": [],
+      "context_maintained": true,
+      "follow_up_suggestions": [
+        "Can you specify a particular subject or area to research?",
+        "Would you like examples of how to search for academic topics?"
+      ],
+      "confidence": 0.8
+    },
+    "metadata": {
+      "agent_name": "Knowledge Search Agent",
+      "timestamp": "2024-06-16T23:57:11Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-01-09T23:31:07.144718",
+  "test_message_used": "Research a sample topic for testing",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "answer": "There is no relevant information available in the PDF knowledge base related to the sample research topic requested. Please provide a more specific topic or clarify your query for further assistance.",
+      "sources": [],
+      "context_maintained": true,
+      "follow_up_suggestions": [
+        "Can you specify a particular subject or area to research?",
+        "Would you like examples of how to search for academic topics?"
+      ],
+      "confidence": 0.8
+    },
+    "metadata": {
+      "agent_name": "Knowledge Search Agent",
+      "timestamp": "2024-06-16T23:57:11Z"
+    }
+  }
+}

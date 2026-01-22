@@ -208,7 +208,7 @@ export default function Home() {
       <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-bold text-white">Knowledge Search</h1>
@@ -274,13 +274,13 @@ export default function Home() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask anything about your documents..."
                 disabled={loading}
-                className="h-12 pr-12 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500 focus:border-teal-500 focus:ring-teal-500/20"
+                className="h-12 pr-12 bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-purple-500/20"
               />
               <Button
                 type="submit"
                 size="sm"
                 disabled={!input.trim() || loading}
-                className="absolute right-2 top-2 bg-teal-600 hover:bg-teal-700 text-white"
+                className="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -311,7 +311,7 @@ export default function Home() {
 function WelcomeState({ onQuestionClick }: { onQuestionClick: (q: string) => void }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center mb-6">
+      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mb-6">
         <Search className="w-8 h-8 text-white" />
       </div>
       <h2 className="text-3xl font-bold text-white mb-3">
@@ -325,7 +325,7 @@ function WelcomeState({ onQuestionClick }: { onQuestionClick: (q: string) => voi
           <button
             key={i}
             onClick={() => onQuestionClick(question)}
-            className="px-4 py-3 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-teal-500 hover:bg-slate-800 text-slate-300 hover:text-white transition-all text-left"
+            className="px-4 py-3 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-purple-500 hover:bg-slate-800 text-slate-300 hover:text-white transition-all text-left"
           >
             {question}
           </button>
@@ -339,7 +339,7 @@ function WelcomeState({ onQuestionClick }: { onQuestionClick: (q: string) => voi
 function LoadingState() {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center flex-shrink-0">
         <Sparkles className="w-5 h-5 text-white" />
       </div>
       <div className="flex-1 space-y-3">
@@ -368,7 +368,7 @@ function MessageBlock({
   if (message.role === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[80%] px-4 py-3 rounded-2xl bg-teal-600 text-white">
+        <div className="max-w-[80%] px-4 py-3 rounded-2xl bg-purple-600 text-white">
           {message.content}
         </div>
       </div>
@@ -377,7 +377,7 @@ function MessageBlock({
 
   return (
     <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center flex-shrink-0">
         <Sparkles className="w-5 h-5 text-white" />
       </div>
       <div className="flex-1 space-y-4">
@@ -399,7 +399,10 @@ function MessageBlock({
         )}
 
         {message.response && message.response.follow_up_suggestions && message.response.follow_up_suggestions.length > 0 && (
-          <FollowUpSuggestions suggestions={message.response.follow_up_suggestions} />
+          <FollowUpSuggestions
+            suggestions={message.response.follow_up_suggestions}
+            onSuggestionClick={handleSend}
+          />
         )}
 
         <div className="flex items-center gap-3 pt-2">
@@ -441,7 +444,7 @@ function AnswerWithCitations({ answer, sources }: { answer: string; sources: Sou
           return (
             <sup
               key={i}
-              className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-teal-400 bg-teal-950 border border-teal-800 rounded ml-0.5"
+              className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-purple-400 bg-purple-950 border border-purple-800 rounded ml-0.5"
             >
               {num}
             </sup>
@@ -488,7 +491,7 @@ function SourceCards({ sources }: { sources: Source[] }) {
                 onClick={() => toggleSource(index)}
                 className="w-full flex items-start gap-3 text-left"
               >
-                <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-medium text-teal-400 bg-teal-950 border border-teal-800 rounded flex-shrink-0 mt-0.5">
+                <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-medium text-purple-400 bg-purple-950 border border-purple-800 rounded flex-shrink-0 mt-0.5">
                   {index + 1}
                 </span>
                 <div className="flex-1 min-w-0">
@@ -528,7 +531,13 @@ function SourceCards({ sources }: { sources: Source[] }) {
 }
 
 // Follow-up suggestions component
-function FollowUpSuggestions({ suggestions }: { suggestions: string[] }) {
+function FollowUpSuggestions({
+  suggestions,
+  onSuggestionClick
+}: {
+  suggestions: string[]
+  onSuggestionClick?: (suggestion: string) => void
+}) {
   if (!suggestions || suggestions.length === 0) return null
 
   return (
@@ -539,7 +548,8 @@ function FollowUpSuggestions({ suggestions }: { suggestions: string[] }) {
           <Badge
             key={i}
             variant="outline"
-            className="border-slate-700 text-slate-300 hover:border-teal-500 hover:text-teal-400 cursor-pointer transition-colors"
+            onClick={() => onSuggestionClick?.(suggestion)}
+            className="border-slate-700 text-slate-300 hover:border-purple-500 hover:text-purple-400 cursor-pointer transition-colors"
           >
             {suggestion}
           </Badge>
@@ -592,7 +602,7 @@ function UploadModal({
           {/* Upload Area */}
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-slate-700 rounded-lg p-8 text-center hover:border-teal-500 hover:bg-slate-800/30 transition-all cursor-pointer mb-6"
+            className="border-2 border-dashed border-slate-700 rounded-lg p-8 text-center hover:border-purple-500 hover:bg-slate-800/30 transition-all cursor-pointer mb-6"
           >
             <Upload className="w-12 h-12 text-slate-500 mx-auto mb-3" />
             <p className="text-slate-300 font-medium mb-1">Click to upload PDF files</p>
@@ -624,7 +634,7 @@ function UploadModal({
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {file.status === 'uploading' && (
-                        <Loader2 className="w-4 h-4 text-teal-400 animate-spin" />
+                        <Loader2 className="w-4 h-4 text-purple-400 animate-spin" />
                       )}
                       {file.status === 'completed' && (
                         <CheckCircle className="w-4 h-4 text-green-500" />

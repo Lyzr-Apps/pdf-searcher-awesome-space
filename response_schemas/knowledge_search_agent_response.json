@@ -24,38 +24,39 @@
   "example_response": {
     "status": "success",
     "result": {
-      "answer": "There is no relevant information available in the PDF knowledge base related to the sample research topic requested. Please provide a more specific topic or clarify your query for further assistance.",
+      "answer": "Key concepts in machine learning generally include supervised learning, unsupervised learning, reinforcement learning, overfitting, underfitting, features, labels, training and testing datasets, models, algorithms, and evaluation metrics. These concepts form the foundation for understanding how machines can learn from data, make predictions, and continuously improve based on feedback.",
       "sources": [],
       "context_maintained": true,
       "follow_up_suggestions": [
-        "Can you specify a particular subject or area to research?",
-        "Would you like examples of how to search for academic topics?"
+        "Can you provide examples of supervised and unsupervised learning?",
+        "What is the difference between overfitting and underfitting in machine learning?"
       ],
       "confidence": 0.8
     },
     "metadata": {
       "agent_name": "Knowledge Search Agent",
-      "timestamp": "2024-06-16T23:57:11Z"
+      "timestamp": "2024-06-08T13:09:22Z"
     }
   },
   "is_actual_tested": true,
-  "test_timestamp": "2026-01-09T23:31:07.144718",
+  "test_timestamp": "2026-01-22T12:26:17.896778",
   "test_message_used": "Research a sample topic for testing",
   "actual_test_response": {
     "status": "success",
     "result": {
-      "answer": "There is no relevant information available in the PDF knowledge base related to the sample research topic requested. Please provide a more specific topic or clarify your query for further assistance.",
+      "answer": "Key concepts in machine learning generally include supervised learning, unsupervised learning, reinforcement learning, overfitting, underfitting, features, labels, training and testing datasets, models, algorithms, and evaluation metrics. These concepts form the foundation for understanding how machines can learn from data, make predictions, and continuously improve based on feedback.",
       "sources": [],
       "context_maintained": true,
       "follow_up_suggestions": [
-        "Can you specify a particular subject or area to research?",
-        "Would you like examples of how to search for academic topics?"
+        "Can you provide examples of supervised and unsupervised learning?",
+        "What is the difference between overfitting and underfitting in machine learning?"
       ],
       "confidence": 0.8
     },
     "metadata": {
       "agent_name": "Knowledge Search Agent",
-      "timestamp": "2024-06-16T23:57:11Z"
+      "timestamp": "2024-06-08T13:09:22Z"
     }
-  }
+  },
+  "test_passed": true
 }

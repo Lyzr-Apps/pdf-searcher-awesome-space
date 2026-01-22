@@ -1,27 +1,27 @@
 {
   "agent_name": "Knowledge Search Agent",
   "agent_id": "69618f6cc57d451439d4d682",
-  "test_message": "What are the main conclusions in the document?",
+  "test_message": "What are the key concepts in machine learning?",
   "expected_purpose": "research",
-  "timestamp": "2026-01-09T23:31:00.730859",
+  "timestamp": "2026-01-22T12:26:17.896116",
   "is_valid_json": true,
   "validation_errors": [],
   "actual_response": {
     "status": "success",
     "result": {
-      "answer": "The main conclusions of the document could not be determined, as no specific source information or excerpts pertaining to the document's conclusions were found in the knowledge base. If you can provide more details or specify a section, I can attempt to retrieve more targeted information.",
+      "answer": "Key concepts in machine learning generally include supervised learning, unsupervised learning, reinforcement learning, overfitting, underfitting, features, labels, training and testing datasets, models, algorithms, and evaluation metrics. These concepts form the foundation for understanding how machines can learn from data, make predictions, and continuously improve based on feedback.",
       "sources": [],
       "context_maintained": true,
       "follow_up_suggestions": [
-        "What are the main recommendations in the document?",
-        "Can you provide a summary of the key findings?"
+        "Can you provide examples of supervised and unsupervised learning?",
+        "What is the difference between overfitting and underfitting in machine learning?"
       ],
-      "confidence": 0.1
+      "confidence": 0.8
     },
     "metadata": {
       "agent_name": "Knowledge Search Agent",
-      "timestamp": "2024-06-08T18:39:36Z"
+      "timestamp": "2024-06-08T13:09:22Z"
     }
   },
-  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"answer\": \"The main conclusions of the document could not be determined, as no specific source information or excerpts pertaining to the document's conclusions were found in the knowledge base. If you can provide more details or specify a section, I can attempt to retrieve more targeted information.\",\n    \"sources\": [],\n    \"context_maintained\": true,\n    \"follow_up_suggestions\": [\n      \"What are the main recommendations in the document?\",\n      \"Can you provide a summary of the key findings?\"\n    ],\n    \"confidence\": 0.1\n  },\n  \"metadata\": {\n    \"agent_name\": \"Knowledge Search Agent\",\n    \"timestamp\": \"2024-06-08T18:39:36Z\"\n  }\n}"
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"answer\": \"Key concepts in machine learning generally include supervised learning, unsupervised learning, reinforcement learning, overfitting, underfitting, features, labels, training and testing datasets, models, algorithms, and evaluation metrics. These concepts form the foundation for understanding how machines can learn from data, make predictions, and continuously improve based on feedback.\",\n    \"sources\": [],\n    \"context_maintained\": true,\n    \"follow_up_suggestions\": [\n      \"Can you provide examples of supervised and unsupervised learning?\",\n      \"What is the difference between overfitting and underfitting in machine learning?\"\n    ],\n    \"confidence\": 0.8\n  },\n  \"metadata\": {\n    \"agent_name\": \"Knowledge Search Agent\",\n    \"timestamp\": \"2024-06-08T13:09:22Z\"\n  }\n}"
 }
